@@ -1,0 +1,25 @@
+<div class="page">
+  <div class="top">
+    <h2 class="h">Users</h2>
+  </div>
+
+  <div class="grid">
+    <mat-card class="card" *ngFor="let u of (users$ | async)" (click)="openUser(u)">
+      <img class="avatar" [src]="u.avatar" [alt]="u.first_name" />
+      <div class="info">
+        <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
+        <div class="meta">ID: {{ u.id }}</div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="pager">
+    <mat-paginator
+      [length]="(total$ | async) ?? 0"
+      [pageSize]="(perPage$ | async) ?? 6"
+      [pageIndex]="(pageIndex$ | async) ?? 0"
+      [hidePageSize]="true"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="wrap">
+  <button mat-stroked-button (click)="back()">Back</button>
+
+  <mat-card class="details" *ngIf="user as u">
+    <img class="avatar" [src]="u.avatar" [alt]="u.first_name" />
+    <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
+    <div class="line">ID: {{ u.id }}</div>
+    <div class="line">{{ u.email }}</div>
+  </mat-card>
+</div>

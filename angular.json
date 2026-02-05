@@ -24,13 +24,11 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+             "assets": [
+              "src/favicon.ico",
+              "src/assets"
             ],
-            "styles": [
+             "styles": [
               "src/styles.scss"
             ]
           },

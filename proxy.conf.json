@@ -1,0 +1,11 @@
+{
+  "/reqres": {
+    "target": "https://reqres.in",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/reqres": ""
+    },
+    "logLevel": "debug"
+  }
+}
