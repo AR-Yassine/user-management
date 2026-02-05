@@ -1,17 +1,30 @@
-<mat-toolbar class="toolbar" color="primary">
-  <div class="brand" (click)="goHome()" role="button" tabindex="0">
-    <span class="title">Users Explorer</span>
-    <span class="subtitle">Angular Quiz</span>
+<mat-toolbar class="toolbar">
+  <div class="brand" (click)="goHome()">
+    <div class="logo">UX</div>
+    <div class="brand-text">
+      <div class="title">Users Explorer</div>
+      <div class="subtitle">User Management</div>
+    </div>
   </div>
 
   <span class="spacer"></span>
 
-  <mat-form-field appearance="outline" class="search">
-    <mat-label>Search user by ID</mat-label>
-    <input matInput type="number" placeholder="e.g. 7" />
-    <mat-icon matSuffix>search</mat-icon>
+<div class="search-wrapper">
+  <mat-form-field class="search oval" appearance="fill">
+    <input
+      matInput
+      inputmode="numeric"
+      placeholder="Search user by ID"
+      autocomplete="off"
+    />
+    <button mat-icon-button matSuffix>
+      <mat-icon>search</mat-icon>
+    </button>
   </mat-form-field>
+</div>
+
+
+
 </mat-toolbar>
 
-<!-- Loading bar placeholder (we will connect it later with interceptor) -->
-<mat-progress-bar mode="indeterminate" *ngIf="false"></mat-progress-bar>
+<div class="toolbar-glow"></div>
