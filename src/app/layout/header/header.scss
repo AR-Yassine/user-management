@@ -1,0 +1,35 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  line-height: 1.1;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.subtitle {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.search {
+  width: 320px;
+  max-width: 55vw;
+}
+
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none; // cleaner header
+}

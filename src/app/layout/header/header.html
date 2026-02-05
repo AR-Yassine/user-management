@@ -1,0 +1,17 @@
+<mat-toolbar class="toolbar" color="primary">
+  <div class="brand" (click)="goHome()" role="button" tabindex="0">
+    <span class="title">Users Explorer</span>
+    <span class="subtitle">Angular Quiz</span>
+  </div>
+
+  <span class="spacer"></span>
+
+  <mat-form-field appearance="outline" class="search">
+    <mat-label>Search user by ID</mat-label>
+    <input matInput type="number" placeholder="e.g. 7" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</mat-toolbar>
+
+<!-- Loading bar placeholder (we will connect it later with interceptor) -->
+<mat-progress-bar mode="indeterminate" *ngIf="false"></mat-progress-bar>
