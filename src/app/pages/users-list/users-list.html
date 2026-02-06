@@ -1,25 +1,92 @@
 <div class="page">
   <div class="top">
     <h2 class="h">Users</h2>
+
+<mat-button-toggle-group
+  class="view-toggle"
+  [value]="view"
+  (valueChange)="onViewChange($event)"
+  exclusive>
+  <mat-button-toggle value="cards">Cards</mat-button-toggle>
+  <mat-button-toggle value="table">Table</mat-button-toggle>
+</mat-button-toggle-group>
+
   </div>
 
-  <div class="grid">
-    <mat-card class="card" *ngFor="let u of (users$ | async)" (click)="openUser(u)">
+  <div class="content" *ngIf="users$ | async as users">
+    <div class="grid" *ngIf="view === 'cards'">
+    <mat-card class="card" *ngFor="let u of users; trackBy: trackById">
       <img class="avatar" [src]="u.avatar" [alt]="u.first_name" />
+
       <div class="info">
-        <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
-        <div class="meta">ID: {{ u.id }}</div>
+        <a class="name-link" (click)="openUser(u); $event.preventDefault()">
+          {{ u.first_name }} {{ u.last_name }}
+        </a>
+        <div class="email">{{ u.email }}</div>
       </div>
     </mat-card>
   </div>
 
-  <div class="pager">
-    <mat-paginator
-      [length]="(total$ | async) ?? 0"
-      [pageSize]="(perPage$ | async) ?? 6"
-      [pageIndex]="(pageIndex$ | async) ?? 0"
-      [hidePageSize]="true"
-      (page)="onPageChange($event)">
-    </mat-paginator>
+
+    <div class="table-wrap" *ngIf="view === 'table'">
+      <table mat-table [dataSource]="users" class="mat-elevation-z0 table">
+        <ng-container matColumnDef="avatar">
+          <th mat-header-cell *matHeaderCellDef>Avatar</th>
+          <td mat-cell *matCellDef="let u">
+            <img class="t-avatar" [src]="u.avatar" [alt]="u.first_name" />
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let u">{{ u.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let u">{{ u.first_name }} {{ u.last_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let u">{{ u.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let u">
+            <button
+              class="view-btn"
+              type="button"
+              (click)="openUser(u); $event.stopPropagation()">
+              View
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="t-head"></tr>
+                <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="openUser(row)"
+          class="row t-row">
+        </tr>
+
+
+      </table>
+    </div>
   </div>
+
+<div class="pager sticky">
+  <mat-paginator
+    [length]="(total$ | async) ?? 0"
+    [pageSize]="(pageSizeView$ | async) ?? 12"
+    [pageIndex]="(pageIndexView$ | async) ?? 0"
+    [pageSizeOptions]="[]"
+    [hidePageSize]="true"
+    [showFirstLastButtons]="true"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</div>
+
 </div>

@@ -3,37 +3,74 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, switchMap, shareReplay, map } from 'rxjs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { UsersService } from '../../core/services/users.service';
 import { ApiUser } from '../../core/models/user.models';
 
 @Component({
   selector: 'app-users-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatPaginatorModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatTableModule,
+  ],
   templateUrl: './users-list.html',
   styleUrl: './users-list.scss',
 })
 export class UsersListComponent {
-  private page$ = new BehaviorSubject<number>(1);
+  view: 'cards' | 'table' = 'cards';
 
-  readonly pageData$ = this.page$.pipe(
-    switchMap((p) => this.usersService.getUsersPage(p)),
-    shareReplay(1)
-  );
+  readonly cardsPageSize = 12;
+  readonly tablePageSize = 15;
 
-  readonly users$ = this.pageData$.pipe(map((res) => res.data));
-  readonly total$ = this.pageData$.pipe(map((res) => res.total));
-  readonly perPage$ = this.pageData$.pipe(map((res) => res.per_page));
-  readonly pageIndex$ = this.pageData$.pipe(map((res) => res.page - 1));
+  private pageIndex$ = new BehaviorSubject<number>(0);
+  private pageSize$ = new BehaviorSubject<number>(this.cardsPageSize);
 
-  constructor(private usersService: UsersService, private router: Router) {}
+  readonly users$;
+  readonly total$;
+  readonly pageIndexView$ = this.pageIndex$.asObservable();
+  readonly pageSizeView$ = this.pageSize$.asObservable();
+
+  displayedColumns: string[] = ['avatar', 'id', 'name', 'email', 'actions'];
+
+  constructor(private usersService: UsersService, private router: Router) {
+    const allUsers$ = this.usersService.getAllUsers().pipe(shareReplay(1));
+
+    this.total$ = allUsers$.pipe(map(users => users.length));
+
+    this.users$ = combineLatest([
+      allUsers$,
+      this.pageIndex$,
+      this.pageSize$
+    ]).pipe(
+      map(([all, pageIndex, pageSize]) => {
+        const start = pageIndex * pageSize;
+        return all.slice(start, start + pageSize);
+      }),
+      shareReplay(1)
+    );
+  }
+
+  onViewChange(v: 'cards' | 'table') {
+    this.view = v;
+    this.pageIndex$.next(0);
+    this.pageSize$.next(v === 'cards' ? this.cardsPageSize : this.tablePageSize);
+  }
 
   onPageChange(e: PageEvent) {
-    this.page$.next(e.pageIndex + 1);
+    this.pageIndex$.next(e.pageIndex);
   }
 
   openUser(u: ApiUser) {
     this.router.navigate(['/users', u.id]);
+  }
+
+  trackById(_: number, u: ApiUser) {
+    return u.id;
   }
 }
