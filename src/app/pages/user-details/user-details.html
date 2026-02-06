@@ -1,10 +1,55 @@
-<div class="wrap">
-  <button mat-stroked-button (click)="back()">Back</button>
+<div class="page">
+  <div class="topbar">
+    <button class="back" mat-stroked-button (click)="back()">
+      Back
+    </button>
+  </div>
 
-  <mat-card class="details" *ngIf="user as u">
-    <img class="avatar" [src]="u.avatar" [alt]="u.first_name" />
-    <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
-    <div class="line">ID: {{ u.id }}</div>
-    <div class="line">{{ u.email }}</div>
-  </mat-card>
+  <ng-container *ngIf="state$ | async as s">
+    <div class="wrap" *ngIf="s.status === 'ready'">
+      <mat-card class="hero">
+        <div class="hero-left">
+          <img class="avatar" [src]="s.user.avatar" [alt]="s.user.first_name" />
+          <div class="name">{{ s.user.first_name }} {{ s.user.last_name }}</div>
+          <div class="sub">User ID: <span>{{ s.user.id }}</span></div>
+        </div>
+
+        <div class="hero-right">
+          <div class="grid">
+            <div class="item">
+              <div class="label">Email</div>
+              <div class="value">{{ s.user.email }}</div>
+            </div>
+
+            <div class="item">
+              <div class="label">Phone</div>
+              <div class="value">{{ s.user.phone || '—' }}</div>
+            </div>
+
+            <div class="item">
+              <div class="label">Gender</div>
+              <div class="value">{{ s.user.gender || '—' }}</div>
+            </div>
+
+            <div class="item">
+              <div class="label">Date of birth</div>
+              <div class="value">{{ s.user.dob || '—' }}</div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="wrap" *ngIf="s.status === 'loading'">
+      <mat-card class="hero skeleton-card">
+        <div class="sk-avatar"></div>
+        <div class="sk-lines">
+          <div class="sk-line w70"></div>
+          <div class="sk-line w50"></div>
+          <div class="sk-line w90"></div>
+          <div class="sk-line w60"></div>
+        </div>
+      </mat-card>
+    </div>
+  </ng-container>
 </div>

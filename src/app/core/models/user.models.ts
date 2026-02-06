@@ -17,3 +17,14 @@ export interface UsersPageResponse {
 export interface UserResponse {
   data: ApiUser;
 }
+export interface ApiUser {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+
+  dob?: string;
+  gender?: string;
+  phone?: string;
+}
