@@ -20,5 +20,5 @@ export const routes: Routes = [
       { path: 'contact', loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
     ],
   },
-  { path: '**', redirectTo: '/dashboard' },
+  { path: '**', redirectTo: '/users/list' },
 ];

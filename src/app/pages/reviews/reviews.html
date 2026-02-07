@@ -1,1 +1,82 @@
-<h2 style="color:white">Dashboard</h2>
+<section class="page">
+  <header class="top">
+    <div class="left">
+      <h2 class="h">Reviews</h2>
+      <div class="sub">What people say about our User Management System</div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <article class="card" *ngFor="let r of reviews; trackBy: trackByName">
+      <div class="row">
+        <div class="who">
+          <div class="name">{{ r.name }}</div>
+          <div class="role">{{ r.role }} • {{ r.date }}</div>
+        </div>
+
+        <div class="stars">
+          <mat-icon *ngFor="let _ of starsArray(r.stars)">star</mat-icon>
+          <mat-icon class="dim" *ngFor="let _ of emptyStarsArray(r.stars)">star</mat-icon>
+        </div>
+      </div>
+
+      <p class="comment">{{ r.comment }}</p>
+    </article>
+  </div>
+</section>
+
+
+<section class="add-review card">
+  <h3 class="form-title">Leave a Review</h3>
+
+  <form (ngSubmit)="submitReview()">
+    <div class="row2">
+      <div class="field">
+        <label>Name</label>
+        <input
+          [(ngModel)]="name"
+          name="name"
+          required
+          placeholder="Your name" />
+      </div>
+
+      <div class="field">
+        <label>Role</label>
+        <input
+          [(ngModel)]="role"
+          name="role"
+          placeholder="Admin / User / HR" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Your Message</label>
+      <textarea
+        [(ngModel)]="message"
+        name="message"
+        required
+        rows="5"
+        placeholder="Write your review..."></textarea>
+    </div>
+
+    <div class="rating">
+      <label>Rating</label>
+      <div class="stars-input">
+        <mat-icon
+          *ngFor="let s of [1,2,3,4,5]"
+          (click)="setRating(s)"
+          [class.active]="s <= rating">
+          star
+        </mat-icon>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="send">
+        <mat-icon>send</mat-icon>
+        <span>Submit Review</span>
+      </button>
+    </div>
+  </form>
+</section>
+

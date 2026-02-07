@@ -23,11 +23,8 @@ import { ApiUser } from '../../core/models/user.models';
   styleUrl: './users-list.scss',
 })
 export class UsersListComponent {
-  view: 'cards' | 'table' = 'cards';
 
   readonly cardsPageSize = 12;
-  readonly tablePageSize = 15;
-
   private pageIndex$ = new BehaviorSubject<number>(0);
   private pageSize$ = new BehaviorSubject<number>(this.cardsPageSize);
 
@@ -56,11 +53,6 @@ export class UsersListComponent {
     );
   }
 
-  onViewChange(v: 'cards' | 'table') {
-    this.view = v;
-    this.pageIndex$.next(0);
-    this.pageSize$.next(v === 'cards' ? this.cardsPageSize : this.tablePageSize);
-  }
 
   onPageChange(e: PageEvent) {
     this.pageIndex$.next(e.pageIndex);

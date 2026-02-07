@@ -1,23 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReviewsComponent } from './reviews';
 
-import { Reviews } from './reviews';
-
-describe('Reviews', () => {
-  let component: Reviews;
-  let fixture: ComponentFixture<Reviews>;
+describe('ReviewsComponent', () => {
+  let component: ReviewsComponent;
+  let fixture: ComponentFixture<ReviewsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Reviews]
-    })
-    .compileComponents();
+      imports: [ReviewsComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Reviews);
+    fixture = TestBed.createComponent(ReviewsComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render title', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.textContent).toContain('Reviews');
   });
 });

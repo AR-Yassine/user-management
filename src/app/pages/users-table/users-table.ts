@@ -1,17 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, shareReplay } from 'rxjs';
+import { Router } from '@angular/router';
 
-type UiUser = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  avatar: string;
-};
+import { UsersService } from '../../core/services/users.service';
+import { ApiUser } from '../../core/models/user.models';
 
 @Component({
   selector: 'app-users-table',
@@ -19,39 +15,39 @@ type UiUser = {
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatIconModule],
   templateUrl: './users-table.html',
   styleUrl: './users-table.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersTableComponent {
+  private usersService = inject(UsersService);
+  private router = inject(Router);
+
   displayedColumns: string[] = ['avatar', 'id', 'name', 'email', 'actions'];
 
-  // TEMP data streams so template works (replace later with your service)
-  users$: Observable<UiUser[]> = of([]);
-  total$: Observable<number> = of(0);
-  pageSizeView$: Observable<number> = of(15);
-  pageIndexView$: Observable<number> = of(0);
+  private pageIndex$ = new BehaviorSubject<number>(0);
+  private pageSize$ = new BehaviorSubject<number>(15);
 
-  openAdd(): void {
-    // TODO: open add dialog / navigate to add form
-    console.log('openAdd()');
-  }
+  private allUsers$ = this.usersService.getAllUsers().pipe(shareReplay(1));
 
-  openUser(u: UiUser): void {
-    // TODO: navigate to /users/:id
-    console.log('openUser()', u);
-  }
-
-  openEdit(u: UiUser): void {
-    // TODO: open edit dialog / navigate to edit form
-    console.log('openEdit()', u);
-  }
-
-  remove(id: number): void {
-    // TODO: call delete
-    console.log('remove()', id);
-  }
+  vm$ = combineLatest([this.allUsers$, this.pageIndex$, this.pageSize$]).pipe(
+    map(([all, pageIndex, pageSize]) => {
+      const start = pageIndex * pageSize;
+      return {
+        users: all.slice(start, start + pageSize),
+        total: all.length,
+        pageIndex,
+        pageSize,
+      };
+    }),
+    shareReplay(1)
+  );
 
   onPageChange(e: PageEvent): void {
-    // TODO: load users by page
-    console.log('onPageChange()', e);
+    this.pageIndex$.next(e.pageIndex);
+    this.pageSize$.next(e.pageSize);
   }
-}
 
+  openAdd(): void { console.log('openAdd()'); }
+  openUser(u: ApiUser): void { this.router.navigate(['/users', u.id]); }
+  openEdit(u: ApiUser): void { console.log('openEdit()', u); }
+  remove(id: number): void { console.log('remove()', id); }
+}

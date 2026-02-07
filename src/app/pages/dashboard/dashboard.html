@@ -1,1 +1,130 @@
-<h2 class="page-title">Dashboard</h2>
+<section class="page" *ngIf="vm$ | async as vm">
+  <header class="top">
+    <div class="left">
+      <h2 class="h">Dashboard</h2>
+      <div class="sub">Quick statistics & insights about your members</div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <article class="card big">
+      <div class="card-top">
+        <mat-icon>groups</mat-icon>
+        <div>
+          <div class="k">Total Members</div>
+          <div class="v">{{ vm.total }}</div>
+        </div>
+      </div>
+      <div class="hint">All registered users in your system.</div>
+    </article>
+
+
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>man</mat-icon>
+        <div>
+          <div class="k">Male</div>
+          <div class="v">{{ vm.male }}</div>
+        </div>
+      </div>
+      <div class="mini">{{ vm.genderPct.male }}%</div>
+    </article>
+
+
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>woman</mat-icon>
+        <div>
+          <div class="k">Female</div>
+          <div class="v">{{ vm.female }}</div>
+        </div>
+      </div>
+      <div class="mini">{{ vm.genderPct.female }}%</div>
+    </article>
+
+
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>help_outline</mat-icon>
+        <div>
+          <div class="k">Unknown</div>
+          <div class="v">{{ vm.unknownGender }}</div>
+        </div>
+      </div>
+      <div class="mini">{{ vm.genderPct.unknown }}%</div>
+    </article>
+
+    <article class="card wide">
+      <div class="card-top">
+        <mat-icon>fact_check</mat-icon>
+        <div>
+          <div class="k">Profile Completeness</div>
+          <div class="v2">Phones: {{ vm.withPhone }} • DOB: {{ vm.withDob }}</div>
+        </div>
+      </div>
+
+      <div class="bars">
+        <div class="bar">
+          <div class="bar-label">Phone</div>
+          <div class="bar-track">
+            <div class="bar-fill" [style.width.%]="vm.total ? (vm.withPhone / vm.total) * 100 : 0"></div>
+          </div>
+            <div class="bar-val">{{ phonePct(vm) }}%</div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">DOB</div>
+          <div class="bar-track">
+            <div class="bar-fill" [style.width.%]="vm.total ? (vm.withDob / vm.total) * 100 : 0"></div>
+          </div>
+            <div class="bar-val">{{ dobPct(vm) }}%</div>
+        </div>
+      </div>
+    </article>
+
+
+    <article class="card wide">
+      <div class="card-top">
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <div class="k">Age Insights</div>
+          <div class="v2">
+            Avg Age:
+            <strong>{{ vm.avgAge === null ? 'N/A' : vm.avgAge }}</strong>
+            <span class="sep">•</span>
+            Youngest:
+            <strong>{{ vm.youngest ? (vm.youngest.name + ' (' + vm.youngest.age + ')') : 'N/A' }}</strong>
+            <span class="sep">•</span>
+            Oldest:
+            <strong>{{ vm.oldest ? (vm.oldest.name + ' (' + vm.oldest.age + ')') : 'N/A' }}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="hint">Based on available DOB values.</div>
+    </article>
+
+
+    <article class="card wide">
+      <div class="card-top">
+        <mat-icon>cake</mat-icon>
+        <div>
+          <div class="k">Upcoming Birthdays</div>
+          <div class="v2">Next 3 members</div>
+        </div>
+      </div>
+
+      <div class="list">
+        <div class="item" *ngFor="let b of vm.nextBirthdays">
+          <div class="nm">{{ b.name }}</div>
+          <div class="dt">{{ b.date }}</div>
+          <div class="tag">In {{ b.inDays }} day(s)</div>
+        </div>
+
+        <div class="empty" *ngIf="vm.nextBirthdays.length === 0">
+          No DOB data available.
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
