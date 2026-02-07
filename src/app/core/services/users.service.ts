@@ -1,32 +1,48 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, shareReplay } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { ApiUser, UsersPageResponse } from '../models/user.models';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-  private allUsers$?: Observable<ApiUser[]>;
-  private userCache = new Map<number, Observable<ApiUser>>();
+  private loaded = false;
+
+  private usersSubject = new BehaviorSubject<ApiUser[]>([]);
+  readonly users$ = this.usersSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<ApiUser[]> {
-    if (!this.allUsers$) {
-      this.allUsers$ = this.http
+    if (!this.loaded) {
+      this.loaded = true;
+      this.http
         .get<UsersPageResponse>('assets/mock-users.json')
-        .pipe(map(res => res.data), shareReplay(1));
+        .pipe(
+          map(res => res.data ?? []),
+          tap(users => this.usersSubject.next(users))
+        )
+        .subscribe();
     }
-    return this.allUsers$;
+    return this.users$;
   }
 
   getUserById(id: number): Observable<ApiUser> {
-    if (!this.userCache.has(id)) {
-      const req$ = this.getAllUsers().pipe(
-        map(all => all.find(u => u.id === id)!),
-        shareReplay(1)
-      );
-      this.userCache.set(id, req$);
-    }
-    return this.userCache.get(id)!;
+    return this.getAllUsers().pipe(map(all => all.find(u => u.id === id)!));
+  }
+
+
+  addUser(user: ApiUser): void {
+    const current = this.usersSubject.getValue();
+    this.usersSubject.next([...current, user]);
+  }
+
+  updateUser(updated: ApiUser): void {
+    const current = this.usersSubject.getValue();
+    this.usersSubject.next(current.map(u => (u.id === updated.id ? { ...u, ...updated } : u)));
+  }
+
+  deleteUser(id: number): void {
+    const current = this.usersSubject.getValue();
+    this.usersSubject.next(current.filter(u => u.id !== id));
   }
 }

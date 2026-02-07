@@ -1,19 +1,20 @@
 .shell {
-  min-height: calc(100vh - 64px);
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 270px 1fr;
   gap: 0;
+  padding-bottom: 56px;
 }
 
 .sidebar {
   position: sticky;
   top: 0;
-  height: calc(100vh - 64px);
   padding: 18px 14px;
   border-right: 1px solid rgba(255,255,255,.08);
   background: rgba(10, 14, 30, .35);
   backdrop-filter: blur(10px);
   overflow: auto;
+  height: 100vh;
 }
 
 .side-title {
@@ -77,21 +78,34 @@
   flex: 1;
 }
 
-.footer {
+.global-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 56px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  gap: 8px;
+
+  width: 100%;
+  z-index: 9999;
+
+  color: rgba(255,255,255,.90);
   font-size: 20px;
-  font-weight: 600;
-  opacity: 0.85;
-  background: linear-gradient(
-    180deg,
-    rgba(11,16,32,0),
-    rgba(11,16,32,0.85)
-  );
+  font-weight: 800;
+
+  background: rgba(11,16,32,0.92);
+  border-top: 1px solid rgba(255,255,255,.10);
 }
+
+.global-footer .copy {
+  font-weight: 900;
+  opacity: 0.9;
+}
+
 
 .side-group {
   margin: 0 0 14px;
@@ -125,7 +139,6 @@
 details[open] .chev {
   transform: rotate(-135deg);
 }
-
 
 
 

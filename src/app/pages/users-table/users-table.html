@@ -6,31 +6,28 @@
     </div>
 
     <div class="right">
-      <button class="add-btn" type="button" (click)="openAdd()">
-        + Add User
-      </button>
+      <button class="add-btn" type="button" (click)="openAdd()">+ Add User</button>
     </div>
   </div>
 
-<div class="content" *ngIf="vm$ | async as vm">
-  <div class="table-wrap">
-    <table mat-table [dataSource]="vm.users" class="mat-elevation-z0 table">
+  <div class="content" *ngIf="vm$ | async as vm">
+    <div class="table-wrap">
+      <table mat-table [dataSource]="vm.users" class="mat-elevation-z0 table">
 
-        <!-- Avatar -->
         <ng-container matColumnDef="avatar">
           <th mat-header-cell *matHeaderCellDef>Avatar</th>
           <td mat-cell *matCellDef="let u">
-          <img class="t-avatar" [src]="u.avatar" [alt]="u.first_name" loading="lazy" />
+            <img class="t-avatar" [src]="u.avatar" [alt]="u.first_name" loading="lazy" />
           </td>
         </ng-container>
 
-        <!-- ID -->
+
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let u">{{ u.id }}</td>
         </ng-container>
 
-        <!-- Name -->
+
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let u">
@@ -38,7 +35,6 @@
           </td>
         </ng-container>
 
-        <!-- Email -->
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef>Email</th>
           <td mat-cell *matCellDef="let u">
@@ -46,54 +42,99 @@
           </td>
         </ng-container>
 
-        <!-- Actions -->
+
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Phone</th>
+          <td mat-cell *matCellDef="let u">
+            <span class="t-phone">
+              {{ getPhone(u) }}
+            </span>
+          </td>
+        </ng-container>
+
+
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef class="actions-head">Actions</th>
           <td mat-cell *matCellDef="let u" class="actions-cell">
-            <button
-              class="btn view"
-              type="button"
-              (click)="openUser(u); $event.stopPropagation()">
+            <button class="btn view" type="button" (click)="openUser(u); $event.stopPropagation()">
               View
             </button>
 
-            <button
-              class="btn edit"
-              type="button"
-              (click)="openEdit(u); $event.stopPropagation()">
+            <button class="btn edit" type="button" (click)="openEdit(u); $event.stopPropagation()">
               Edit
             </button>
 
-            <button
-              class="btn del"
-              type="button"
-              (click)="remove(u.id); $event.stopPropagation()">
+            <button class="btn del" type="button" (click)="remove(u.id); $event.stopPropagation()">
               Delete
             </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns" class="t-head"></tr>
-
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          class="t-row">
-        </tr>
-
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="t-row"></tr>
       </table>
+    </div>
+
+    <div class="pager sticky">
+      <mat-paginator
+        [length]="vm.total"
+        [pageSize]="vm.pageSize"
+        [pageIndex]="vm.pageIndex"
+        [pageSizeOptions]="[]"
+        [hidePageSize]="true"
+        [showFirstLastButtons]="true"
+        (page)="onPageChange($event)">
+      </mat-paginator>
     </div>
   </div>
 
-<div class="pager sticky" *ngIf="vm$ | async as vm">
-  <mat-paginator
-    [length]="vm.total"
-    [pageSize]="vm.pageSize"
-    [pageIndex]="vm.pageIndex"
-    [pageSizeOptions]="[]"
-    [hidePageSize]="true"
-    [showFirstLastButtons]="true"
-    (page)="onPageChange($event)">
-  </mat-paginator>
-</div>
+
+  <div class="modal-backdrop" *ngIf="modal.open" (click)="closeModal()"></div>
+
+  <div class="modal" *ngIf="modal.open" (click)="$event.stopPropagation()">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 class="m-title">{{ modal.title }}</h3>
+        <button class="m-close" type="button" (click)="closeModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="grid">
+          <label class="field">
+            <span>First name</span>
+            <input type="text" [(ngModel)]="form.first_name" placeholder="e.g. Fatima" />
+          </label>
+
+          <label class="field">
+            <span>Last name</span>
+            <input type="text" [(ngModel)]="form.last_name" placeholder="e.g. Al Shouli" />
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input type="email" [(ngModel)]="form.email" placeholder="name@example.com" />
+          </label>
+
+          <label class="field">
+            <span>Phone</span>
+            <input type="text" [(ngModel)]="form.phone" placeholder="+961..." />
+          </label>
+
+          <label class="field full">
+            <span>Avatar URL</span>
+            <input type="text" [(ngModel)]="form.avatar" placeholder="https://..." />
+          </label>
+        </div>
+
+        <div class="hint" *ngIf="!form.first_name || !form.last_name || !form.email">
+          First name, last name, and email are required.
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="m-btn ghost" type="button" (click)="closeModal()">Cancel</button>
+        <button class="m-btn" type="button" (click)="saveModal()">Save</button>
+      </div>
+    </div>
+  </div>
 </div>

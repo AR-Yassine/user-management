@@ -1,30 +1,31 @@
-<mat-toolbar class="toolbar">
-  <div class="brand" (click)="goHome()">
-    <div class="logo">UX</div>
-    <div class="brand-text">
-      <div class="title">Users Explorer</div>
-      <div class="subtitle">User Management</div>
+<div class="header-center">
+<div class="header-search">
+  <input
+    type="text"
+    placeholder="Search by ID, name, or phone..."
+    [(ngModel)]="search"
+    (ngModelChange)="onSearchChange($event)"
+  />
+
+  <div class="results" *ngIf="results$ | async as results">
+    <div
+      class="item"
+      *ngFor="let u of results"
+      (click)="openUser(u)">
+
+      <img [src]="u.avatar" alt="" />
+      <div class="info">
+        <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
+        <div class="meta">
+          ID {{ u.id }}
+          <span *ngIf="u.phone">• {{ u.phone }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty" *ngIf="search && results.length === 0">
+      No results found
     </div>
   </div>
-
-  <span class="spacer"></span>
-
-<div class="search-wrapper">
-  <mat-form-field class="search oval" appearance="fill">
-    <input
-      matInput
-      inputmode="numeric"
-      placeholder="Search user by ID"
-      autocomplete="off"
-    />
-    <button mat-icon-button matSuffix>
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
 </div>
-
-
-
-</mat-toolbar>
-
-<div class="toolbar-glow"></div>
+</div>
