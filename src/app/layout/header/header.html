@@ -1,31 +1,31 @@
+<mat-progress-bar
+  class="top-loader"
+  *ngIf="loading.loading$ | async"
+  mode="indeterminate">
+</mat-progress-bar>
+
 <div class="header-center">
-<div class="header-search">
-  <input
-    type="text"
-    placeholder="Search by ID, name, or phone..."
-    [(ngModel)]="search"
-    (ngModelChange)="onSearchChange($event)"
-  />
+  <div class="header-search">
+    <input
+      type="text"
+      placeholder="Search user by ID..."
+      [(ngModel)]="search"
+      (ngModelChange)="onSearchChange($event)"
+    />
 
-  <div class="results" *ngIf="results$ | async as results">
-    <div
-      class="item"
-      *ngFor="let u of results"
-      (click)="openUser(u)">
-
-      <img [src]="u.avatar" alt="" />
-      <div class="info">
-        <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
-        <div class="meta">
-          ID {{ u.id }}
-          <span *ngIf="u.phone">• {{ u.phone }}</span>
+    <div class="results" *ngIf="search.trim() && (results$ | async) as results">
+      <div class="item" *ngFor="let u of results" (click)="openUser(u)">
+        <img [src]="u.avatar" alt="" />
+        <div class="info">
+          <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
+          <div class="meta">ID {{ u.id }}</div>
         </div>
       </div>
-    </div>
 
-    <div class="empty" *ngIf="search && results.length === 0">
-      No results found
+
+      <div class="empty" *ngIf="results.length === 0">
+        No user found
+      </div>
     </div>
   </div>
-</div>
 </div>

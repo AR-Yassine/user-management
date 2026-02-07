@@ -31,7 +31,6 @@
   color: rgba(255, 255, 255, 0.68);
 }
 
-/* segmented toggle */
 .seg {
   display: inline-flex;
   padding: 6px;
@@ -72,14 +71,14 @@
   margin-top: 14px;
 }
 
-/* card grid */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
-/* premium card */
+
 .u-card {
   cursor: pointer;
   padding: 14px;
@@ -186,7 +185,6 @@
   font-size: 12px;
 }
 
-/* table theme */
 .table-wrap {
   border-radius: 18px;
   overflow: hidden;
@@ -244,7 +242,7 @@
   white-space: nowrap;
 }
 
-/* paginator */
+
 .pager {
   margin-top: 12px;
   padding: 10px 12px;
@@ -280,6 +278,28 @@
   width: 100%;
   max-width: 1300px;
 }
+
+:host ::ng-deep .mat-mdc-paginator {
+  background: transparent !important;
+}
+
+:host ::ng-deep .mat-mdc-paginator,
+:host ::ng-deep .mat-mdc-paginator * {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+:host ::ng-deep .mat-mdc-icon-button {
+  border-radius: 12px !important;
+}
+
+:host ::ng-deep .mat-mdc-icon-button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+:host ::ng-deep .mat-mdc-icon-button svg {
+  fill: rgba(255, 255, 255, 0.85) !important;
+}
+
 
 
 

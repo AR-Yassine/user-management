@@ -182,13 +182,13 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* add under .t-email */
+
 .t-phone {
   color: rgba(255, 255, 255, 0.78);
   font-size: 13px;
 }
 
-/* Modal */
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -319,14 +319,102 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.95);
+
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
+  transition: background 0.15s ease, border 0.15s ease, transform 0.15s ease;
+}
+
+.field select:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.field select:focus {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.field {
+  position: relative;
+}
+
+.field::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+
+.field select option {
+  background: #0b1020;
+  color: #ffffff;
+  font-weight: 600;
+}
+.field select:invalid {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.gender-select {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 800;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.95);
+  outline: none;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.75) 50%),
+    linear-gradient(135deg, rgba(255,255,255,0.75) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.gender-select:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.gender-select option {
+  color: #0b1022; 
+}
+
+
 @media (max-width: 720px) {
   .grid {
     grid-template-columns: 1fr;
   }
 }
 
-
-/* Responsive */
 @media (max-width: 980px) {
   .top {
     flex-direction: column;

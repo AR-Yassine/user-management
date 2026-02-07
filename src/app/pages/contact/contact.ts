@@ -18,15 +18,13 @@ export class ContactComponent {
   message = '';
 
   submit(): void {
-    // For now: just log. Later connect to backend / email service.
+
     console.log({
       name: this.name,
       email: this.email,
       subject: this.subject,
       message: this.message,
     });
-
-    // Simple reset
     this.name = '';
     this.email = '';
     this.subject = '';
