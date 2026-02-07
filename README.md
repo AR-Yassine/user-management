@@ -1,59 +1,51 @@
-# UserManagement
+This project is a User Management Portal built with Angular (standalone components) to demonstrate frontend architecture, state management, UI/UX quality, caching, and error handling.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+The application includes:
 
-## Development server
+Paginated users list (cards + table)
 
-To start a local development server, run:
+User details page
 
-```bash
-ng serve
-```
+Instant search by user ID
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Add / Edit / Delete users
 
-## Code scaffolding
+Client-side caching
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Global loading indicator
 
-```bash
-ng generate component component-name
-```
+Clean, responsive UI using Angular Material
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+During development, direct API calls were blocked due to:
 
-```bash
-ng generate --help
-```
+CORS restrictions
 
-## Building
+403 Forbidden responses
 
-To build the project run:
+Cloudflare / browser security limitations in local environments
 
-```bash
-ng build
-```
+I attempted multiple solutions, including:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Direct HTTP calls
 
-## Running unit tests
+Angular proxy configuration
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Local Node/Express proxy server
 
-```bash
-ng test
-```
+Despite these attempts, the API remained inaccessible in a reliable way.
 
-## Running end-to-end tests
+Final Solution (Professional Approach)
 
-For end-to-end (e2e) testing, run:
+To ensure the task could be completed without breaking requirements, I implemented:
 
-```bash
-ng e2e
-```
+Graceful fallback to mock users (assets/mock-users.json)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Same response structure as ReqRes API
 
-## Additional Resources
+Transparent switching logic:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+API is attempted first
+
+If it fails → mock data is used automatically
+
+No hard dependency on mock data
