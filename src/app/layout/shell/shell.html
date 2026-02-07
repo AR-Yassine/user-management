@@ -1,0 +1,45 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="side-title">Menu</div>
+    <div class="side-sub">Navigation</div>
+
+    <nav class="side-nav">
+      <a class="side-link" routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon><span>Dashboard</span>
+      </a>
+
+ <div class="side-section">Users</div>
+
+<details class="side-group" open>
+  <summary class="side-link">
+    <mat-icon>group</mat-icon><span>Users</span>
+    <span class="chev"></span>
+  </summary>
+
+  <a class="side-link sub" routerLink="/users/list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon>apps</mat-icon><span>Users Portal</span>
+  </a>
+
+  <a class="side-link sub" routerLink="/users/table" routerLinkActive="active">
+    <mat-icon>table_rows</mat-icon><span>Users Table</span>
+  </a>
+</details>
+
+      <div class="side-section">Company</div>
+      <a class="side-link" routerLink="/reviews" routerLinkActive="active">
+        <mat-icon>star</mat-icon><span>Reviews</span>
+      </a>
+      <a class="side-link" routerLink="/about" routerLinkActive="active">
+        <mat-icon>info</mat-icon><span>About Us</span>
+      </a>
+      <a class="side-link" routerLink="/contact" routerLinkActive="active">
+        <mat-icon>call</mat-icon><span>Contact Us</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <router-outlet></router-outlet>
+    <footer class="footer">© 2026 Project done by Abdel-Rahman Yassine</footer>
+  </main>
+</div>

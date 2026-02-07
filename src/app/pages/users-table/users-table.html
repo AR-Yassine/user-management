@@ -1,37 +1,22 @@
 <div class="page">
   <div class="top">
-    <h2 class="h">Users</h2>
-  </div>
+    <div class="left">
+      <h2 class="h">Users Table</h2>
+      <div class="sub">Manage users (add, edit, delete) with live updates</div>
+    </div>
 
-  <div class="content" *ngIf="users$ | async as users">
-    <div class="grid">
-      <mat-card class="card" *ngFor="let u of users; trackBy: trackById" (click)="openUser(u)">
-        <img class="avatar" [src]="u.avatar" [alt]="u.first_name" />
-        <div class="info">
-          <div class="name">{{ u.first_name }} {{ u.last_name }}</div>
-          <div class="email">{{ u.email }}</div>
-        </div>
-      </mat-card>
+    <div class="right">
+      <button class="add-btn" type="button" (click)="openAdd()">
+        + Add User
+      </button>
     </div>
   </div>
 
   <div class="content" *ngIf="users$ | async as users">
-    <div class="grid" *ngIf="view === 'cards'">
-    <mat-card class="card" *ngFor="let u of users; trackBy: trackById">
-      <img class="avatar" [src]="u.avatar" [alt]="u.first_name" />
-
-      <div class="info">
-        <a class="name-link" (click)="openUser(u); $event.preventDefault()">
-          {{ u.first_name }} {{ u.last_name }}
-        </a>
-        <div class="email">{{ u.email }}</div>
-      </div>
-    </mat-card>
-  </div>
-
-
-    <div class="table-wrap" *ngIf="view === 'table'">
+    <div class="table-wrap">
       <table mat-table [dataSource]="users" class="mat-elevation-z0 table">
+
+        <!-- Avatar -->
         <ng-container matColumnDef="avatar">
           <th mat-header-cell *matHeaderCellDef>Avatar</th>
           <td mat-cell *matCellDef="let u">
@@ -39,49 +24,71 @@
           </td>
         </ng-container>
 
+        <!-- ID -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let u">{{ u.id }}</td>
         </ng-container>
 
+        <!-- Name -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let u">{{ u.first_name }} {{ u.last_name }}</td>
+          <td mat-cell *matCellDef="let u">
+            <span class="t-name">{{ u.first_name }} {{ u.last_name }}</span>
+          </td>
         </ng-container>
 
+        <!-- Email -->
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef>Email</th>
-          <td mat-cell *matCellDef="let u">{{ u.email }}</td>
+          <td mat-cell *matCellDef="let u">
+            <span class="t-email">{{ u.email }}</span>
+          </td>
         </ng-container>
 
+        <!-- Actions -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let u">
+          <th mat-header-cell *matHeaderCellDef class="actions-head">Actions</th>
+          <td mat-cell *matCellDef="let u" class="actions-cell">
             <button
-              class="view-btn"
+              class="btn view"
               type="button"
               (click)="openUser(u); $event.stopPropagation()">
               View
+            </button>
+
+            <button
+              class="btn edit"
+              type="button"
+              (click)="openEdit(u); $event.stopPropagation()">
+              Edit
+            </button>
+
+            <button
+              class="btn del"
+              type="button"
+              (click)="remove(u.id); $event.stopPropagation()">
+              Delete
             </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns" class="t-head"></tr>
-                <tr
+
+        <tr
           mat-row
           *matRowDef="let row; columns: displayedColumns"
-          (click)="openUser(row)"
-          class="row t-row">
+          class="t-row">
         </tr>
-
 
       </table>
     </div>
   </div>
+
   <div class="pager sticky">
     <mat-paginator
       [length]="(total$ | async) ?? 0"
-      [pageSize]="(pageSizeView$ | async) ?? 12"
+      [pageSize]="(pageSizeView$ | async) ?? 15"
       [pageIndex]="(pageIndexView$ | async) ?? 0"
       [pageSizeOptions]="[]"
       [hidePageSize]="true"

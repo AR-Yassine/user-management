@@ -1,0 +1,142 @@
+.shell {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  gap: 0;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 64px);
+  padding: 18px 14px;
+  border-right: 1px solid rgba(255,255,255,.08);
+  background: rgba(10, 14, 30, .35);
+  backdrop-filter: blur(10px);
+  overflow: auto;
+}
+
+.side-title {
+  font-weight: 800;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.side-sub {
+  color: rgba(255,255,255,.65);
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.side-section {
+  margin: 14px 0 8px;
+  color: rgba(255,255,255,.6);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.side-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: rgba(255,255,255,.85);
+  text-decoration: none;
+  transition: transform .15s ease, background .15s ease;
+}
+
+.side-link:hover {
+  background: rgba(255,255,255,.08);
+  transform: translateX(2px);
+}
+
+.side-link.active {
+  background: rgba(255,255,255,.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.main {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+}
+
+.main > router-outlet {
+  display: none;
+}
+
+.main > *:not(router-outlet) {
+  flex: 1;
+}
+
+.footer {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0.85;
+  background: linear-gradient(
+    180deg,
+    rgba(11,16,32,0),
+    rgba(11,16,32,0.85)
+  );
+}
+
+.side-group {
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+}
+
+.side-group > summary {
+  list-style: none;
+}
+.side-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.side-link.sub {
+  margin-left: 10px;
+  padding-left: 14px;
+  opacity: .95;
+}
+
+.chev {
+  margin-left: auto;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255,255,255,.65);
+  border-bottom: 2px solid rgba(255,255,255,.65);
+  transform: rotate(45deg);
+  transition: transform .2s ease;
+}
+
+details[open] .chev {
+  transform: rotate(-135deg);
+}
+
+
+
+
+@media (max-width: 980px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+}

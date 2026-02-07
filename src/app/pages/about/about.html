@@ -1,0 +1,107 @@
+<section class="about">
+  <header class="hero">
+    <div class="badge">
+      <mat-icon>info</mat-icon>
+      <span>About Us</span>
+    </div>
+
+    <h1 class="title">User Management System</h1>
+    <p class="subtitle">
+      A modern dashboard to manage users, roles, and activity — built for clarity, speed, and control.
+    </p>
+
+    <div class="meta">
+      <div class="meta-card">
+        <mat-icon>person</mat-icon>
+        <div>
+          <div class="meta-label">Project by</div>
+          <div class="meta-value">{{ authorName }}</div>
+        </div>
+      </div>
+
+      <div class="meta-card">
+        <mat-icon>calendar_today</mat-icon>
+        <div>
+          <div class="meta-label">Year</div>
+          <div class="meta-value">{{ year }}</div>
+        </div>
+      </div>
+
+      <div class="meta-card">
+        <mat-icon>verified</mat-icon>
+        <div>
+          <div class="meta-label">Version</div>
+          <div class="meta-value">1.0</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>rocket_launch</mat-icon>
+        <h2>Our Mission</h2>
+      </div>
+      <p>
+        Make user administration simple and reliable: view users, manage roles, track changes,
+        and keep everything organized in one place.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>shield</mat-icon>
+        <h2>Security & Access</h2>
+      </div>
+      <p>
+        Designed with clear permissions in mind. The system structure supports safe navigation
+        and clean separation between sections.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>design_services</mat-icon>
+        <h2>UI Experience</h2>
+      </div>
+      <p>
+        A consistent dark-glass interface with responsive layout, smooth hover states,
+        and readable cards for fast management.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="card-top">
+        <mat-icon>tips_and_updates</mat-icon>
+        <h2>Key Features</h2>
+      </div>
+
+      <ul class="list">
+        <li><mat-icon>done</mat-icon><span>Dashboard navigation & structured sections</span></li>
+        <li><mat-icon>done</mat-icon><span>Users portal & users table views</span></li>
+        <li><mat-icon>done</mat-icon><span>Expandable sidebar groups (Users)</span></li>
+        <li><mat-icon>done</mat-icon><span>Responsive layout for smaller screens</span></li>
+      </ul>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" routerLink="/dashboard">
+          <mat-icon>dashboard</mat-icon>
+          <span>Go to Dashboard</span>
+        </button>
+
+        <button mat-stroked-button routerLink="/users/list">
+          <mat-icon>apps</mat-icon>
+          <span>Open Users Portal</span>
+        </button>
+      </div>
+    </article>
+  </div>
+
+  <footer class="bottom">
+    <div class="line"></div>
+    <div class="credit">
+      © {{ year }} Project done by <strong>{{ authorName }}</strong>
+    </div>
+  </footer>
+</section>
