@@ -12,7 +12,7 @@
   border-radius: 18px;
   background: rgba(10, 14, 30, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
 }
 
@@ -85,7 +85,7 @@
   border-radius: 18px;
   background: rgba(10, 14, 30, 0.28) !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
   transition: transform 0.15s ease, background 0.15s ease, border 0.15s ease;
   position: relative;
@@ -191,7 +191,7 @@
   overflow: hidden;
   background: rgba(10, 14, 30, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
 }
 
@@ -250,7 +250,7 @@
   border-radius: 18px;
   background: rgba(10, 14, 30, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+
 }
 
 .pager.sticky {
